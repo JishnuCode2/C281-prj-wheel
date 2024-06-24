@@ -1,0 +1,159 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/OldPlywood.proto"
+
+WorldInfo {
+  info [
+    "In this example, the robot turns on a slope."
+    "Its accelerometer sensor is used to switch on the bottommost LED."
+  ]
+  title "Accelerometer"
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material2 "body"
+      coulombFriction [
+        0
+      ]
+      softCFM 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.22741828608532708 0.013145626002688973 0.9737084346307214 3.15570992375842
+  position 2.0319397995079185 0.019446420585014 1.0874727258256685
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+}
+PointLight {
+  attenuation 0 0 1
+  intensity 0.6
+  location 0.6 0 0
+}
+DEF SLOPE Solid {
+  translation 0 0 0.15
+  rotation 1 0 0 -1.970795
+  children [
+    Shape {
+      appearance OldPlywood {
+      }
+      geometry DEF BOX0 Box {
+        size 0.2 0.02 0.8
+      }
+    }
+  ]
+  name "green box"
+  boundingObject USE BOX0
+}
+Robot {
+  translation -6.66026e-05 0.0315267 0.147022
+  rotation -0.21176913200114122 0.24383815199058537 0.9464125899232847 1.51628
+  children [
+    DEF wheel2 HingeJoint {
+      jointParameters HingeJointParameters {
+        position 16.7
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          consumptionFactor 70
+        }
+      ]
+      endPoint Solid {
+        translation -1.0484e-07 -0.045 0.0249995
+        rotation 0.21014872572786894 -0.2101510198668815 0.9548162451089018 4.66616777628624
+        children [
+          Pose {
+            rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.09394
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "solid(1)"
+      }
+    }
+    DEF wheel1 HingeJoint {
+      jointParameters HingeJointParameters {
+        position 16.7
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          consumptionFactor 70
+        }
+      ]
+      endPoint Solid {
+        translation 5.2166816964269944e-08 0.045 0.024999554520520672
+        rotation 0.21014872572786894 -0.2101510198668815 0.9548162451089018 4.66616777628624
+        children [
+          Pose {
+            rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.09394
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+    Accelerometer {
+    }
+    Pose {
+      translation 0 0 0.0415
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+  ]
+  name "MyBot"
+  contactMaterial "body"
+  boundingObject Pose {
+    translation 0 0 0.0415
+    rotation 0 0 1 -1.570796
+    children [
+      USE BODY
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 0.5
+  }
+  controller "accelerometer"
+}
